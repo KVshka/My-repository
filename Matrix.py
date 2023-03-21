@@ -35,7 +35,10 @@ D_test = [
     [-8, -10, 3, 0, -5]]
 
 print('Использовать тестовые данные или случайные?')
-choice = input('Ваш выбор (1 - тестовые данные, 2 - случайные, q-выход): ')
+while True:
+    choice = input('Введите 1, если хотите использовать тестовые данные, 2 - если случайные, q - для выхода из программы): ')
+    if choice == '1' or choice == '2' or choice == 'q':
+        break
 
 if choice == '1':
     K = K_test
@@ -71,7 +74,7 @@ if choice == 'q':
 if N % 2 == 0:
     print("Число N чётное, в итоговой матрице А будут обрабатываться все элементы")
 else:
-    print("Число N нечётное, в итоговой матрице А не будут обрабатываться элементы N//2+1 строки и столбца, т.к. они не входят в подматрицы")
+    print(f'Число N нечётное, в итоговой матрице А не будут обрабатываться элементы {N//2+1} строки и столбца, т.к. они не входят в подматрицы')
 
 A = []
 for row in range(n):
@@ -109,7 +112,7 @@ for row in range(1, n):
     else:
         end_col = n - 1 - row
     for col in range(0, end_col+1):
-        if row % 2 == 0: # Нумерация строк начинается с 0
+        if (row + 1) % 2 == 1:
             x = x * E[row][col]
 print(f'Произведение чисел в нечетных строках в области 4 в матрице E: {x}')
 
@@ -121,7 +124,7 @@ for row in range(1, n):
     else:
         begin_col = row
     for col in range(begin_col, n):
-        if col % 2 == 1:  # Нумерация столбцов начинается с 0
+        if (col + 1) % 2 == 0:  # Нумерация столбцов начинается с 1
             if E[row][col] > K:
                 count_more_K += 1  # Увеличиваем счетчик
 print(f'Количество чисел, больших К в четных столбцах в области 2 в матрице E: {count_more_K}')
@@ -170,12 +173,12 @@ for row in range(len(A)):
         cur_row.append(0)
     A_and_F_and_K.append(cur_row)  # формируем пустую матрицу, чтобы была возможность доступа к элементам матрицы по индексам
 
-for row in range(N):
-    for col in range(N):
+for row in range(len(A)):
+    for col in range(len(A)):
         A_and_F_and_K[row][col] = K * A_and_F[row][col]
 
 print('Матрица F*A*K:')
-for row in range(N):
+for row in range(len(A)):
     print(A_and_F_and_K[row])
 
 F_transpose = [] # Транспонируем матрицу F
