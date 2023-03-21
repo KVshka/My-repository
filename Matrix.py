@@ -45,12 +45,12 @@ if choice == '1':
 
 if choice == '2': # Генерация случайных данных
     K = int(input("Введите число К="))
-    N = int(input("Введите число N="))
-    if N % 2 != 0 or N // 2 < 3:
-        print(
-            'Ошибка в исходных данных. Число N должно быть четным и таким, чтобы число N/2 было больше или равно 3')
-        exit()
-
+    while True:
+        N = int(input("Введите число N="))
+        if N < 6:
+            print('Число N слишком малое. Введите N >= 6')
+        else:
+            break
     B, C, D, E = [], [], [], []
     n = N // 2  # Размерность матриц B, C, D, E (n x n)
     for row in range(n):
@@ -68,6 +68,11 @@ if choice == '2': # Генерация случайных данных
 if choice == 'q':
     exit()
 
+if N % 2 == 0:
+    print("Число N чётное, в итоговой матрице А будут обрабатываться все элементы")
+else:
+    print("Число N нечётное, в итоговой матрице А не будут обрабатываться элементы N//2+1 строки и столбца, т.к. они не входят в подматрицы")
+
 A = []
 for row in range(n):
     A.append(E[row] + B[row])
@@ -75,7 +80,7 @@ for row in range(n):
 for row in range(n):
     A.append(D[row] + C[row])
 
-# печатаем матрицы E, B, C, D, A
+# Печатаем матрицы E, B, C, D, A
 print('Матрица E:')
 for row in range(n):
     print(E[row])
@@ -93,7 +98,7 @@ for row in range(n):
     print(D[row])
 
 print('Матрица A:')
-for row in range(N):
+for row in range(len(A)):
     print(A[row])
 
 # Считаем произведение чисел в нечетных строках в области 4 в матрице E
@@ -141,27 +146,27 @@ else: # иначе С и В поменять местами несимметри
     for row in range(n):
         F.append(D[row] + B[row])
 print('Матрица F:')
-for row in range(N):
+for row in range(len(F)):
     print(F[row])
 
 A_and_F = []  # Умножаем матрицы A и F
-for row in range(N):
+for row in range(len(A)):
     F_row = []
-    for i in range(N):
+    for i in range(len(A)):
         sum = 0
-        for j in range(N):
+        for j in range(len(A)):
             sum += A[row][j] * F[j][i]
         F_row.append(sum)
     A_and_F.append(F_row)
 
 print('Матрица A*F:')
-for row in range(N):
+for row in range(len(A)):
     print(A_and_F[row])
 
 A_and_F_and_K = [] # Умножаем произведение матриц A и F на константу K
-for row in range(N):
+for row in range(len(A)):
     cur_row = []
-    for col in range(N):
+    for col in range(len(A)):
         cur_row.append(0)
     A_and_F_and_K.append(cur_row)  # формируем пустую матрицу, чтобы была возможность доступа к элементам матрицы по индексам
 
@@ -174,43 +179,42 @@ for row in range(N):
     print(A_and_F_and_K[row])
 
 F_transpose = [] # Транспонируем матрицу F
-for row in range(N):
+for row in range(len(F)):
     F_transpose_row = []
-    for col in range(N):
+    for col in range(len(F)):
         F_transpose_row.append(F[col][row])
     F_transpose.append(F_transpose_row)
 
 print('Транспонированная матрица F:')
-for row in range(N):
+for row in range(len(F)):
     print(F_transpose[row])
 
 F_transpose_and_K = [] # Умножаем транспонированную матрицу F на константу K
-for row in range(N):
+for row in range(len(F)):
     cur_row = []
-    for col in range(N):
+    for col in range(len(F)):
         cur_row.append(0)
     F_transpose_and_K.append(cur_row)  # Формируем пустую матрицу, чтобы была возможность доступа к элементам матрицы по индексам
 
-for row in range(N):
-    for col in range(N):
+for row in range(len(F)):
+    for col in range(len(F)):
         F_transpose_and_K[row][col] = K * F_transpose[row][col]
 
 print('Транспонированная матрица F, умноженная на K:')
-for row in range(N):
+for row in range(len(F)):
     print(F_transpose_and_K[row])
 
-
 result_matrix = []  # Результирующая матрица(сумма A*F*K и Fт*K)
-for row in range(N):  # Формируем пустую матрицу, чтобы была возможность доступа к элементам матрицы по индексам
+for row in range(len(A)):  # Формируем пустую матрицу, чтобы была возможность доступа к элементам матрицы по индексам
     cur_row = []
-    for col in range(N):
+    for col in range(len(A)):
         cur_row.append(0)
     result_matrix.append(cur_row)
 
-for row in range(N):
-    for col in range(N):
+for row in range(len(A)):
+    for col in range(len(A)):
         result_matrix[row][col] = A_and_F_and_K[row][col] + F_transpose_and_K[row][col]
 
 print('Результат:')
-for row in range(N):
+for row in range(len(A)):
     print(result_matrix[row])
