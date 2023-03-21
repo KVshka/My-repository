@@ -109,7 +109,7 @@ for row in range(1, n):
     else:
         end_col = n - 1 - row
     for col in range(0, end_col+1):
-        if (row + 1) % 2 == 1:
+        if row % 2 == 0: # Нумерация строк начинается с 0
             x = x * E[row][col]
 print(f'Произведение чисел в нечетных строках в области 4 в матрице E: {x}')
 
@@ -121,7 +121,7 @@ for row in range(1, n):
     else:
         begin_col = row
     for col in range(begin_col, n):
-        if (col + 1) % 2 == 0:  # Нумерация столбцов начинается с 1
+        if col % 2 == 1:  # Нумерация столбцов начинается с 0
             if E[row][col] > K:
                 count_more_K += 1  # Увеличиваем счетчик
 print(f'Количество чисел, больших К в четных столбцах в области 2 в матрице E: {count_more_K}')
