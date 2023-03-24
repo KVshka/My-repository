@@ -134,9 +134,9 @@ else: # иначе С и В поменять местами несимметри
     for row in range(n):
         F.insert(row, E[row] + B[row])
         F.insert(row+5, D[row] + C[row])
-print('Матрица F:')
-for row in range(len(F)):
-    print(F[row])
+    print('Матрица F:')
+        for row in range(len(F)):
+        print(F[row])
 
 A_and_F = []  # Умножаем матрицы A и F
 for row in range(len(A)):
