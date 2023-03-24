@@ -23,8 +23,8 @@ B_test = [
 C_test = [
     [5, 7, -1, -7, -6],
     [2, 3, 10, -8, 4],
-    [-4, -7, -10, -4, -5],
-    [0, 9, -8, 9, -4],
+    [-4, -7, -10, 15, 5],
+    [0, 9, -8, 9, 4],
     [10, -8, -10, -1, 8]]
 
 D_test = [
@@ -78,10 +78,8 @@ else:
 
 A = []
 for row in range(n):
-    A.append(E[row] + B[row])
-
-for row in range(n):
-    A.append(D[row] + C[row])
+    A.insert(row, E[row] + B[row])
+    A.insert(row+5, D[row] + C[row])
 
 # Печатаем матрицы E, B, C, D, A
 print('Матрица E:')
@@ -106,48 +104,36 @@ for row in range(len(A)):
 
 # Считаем произведение чисел в нечетных строках в области 4 в матрице E
 x = 1
-for row in range(1, n):
-    if row <= n // 2:
-        end_col = row
-    else:
-        end_col = n - 1 - row
-    for col in range(0, end_col+1):
-        if (row + 1) % 2 == 1:
-            x = x * E[row][col]
+for row in range (1, n//2+1):
+    for col in range(row, n-row):
+        if col % 2 == 0: # Нумерация строк начинается с 1
+            x *= E[col][row-1]
 print(f'Произведение чисел в нечетных строках в области 4 в матрице E: {x}')
 
+print("Область 2")
 # Считаем количество чисел, больших К в четных столбцах в области 2 в матрице E
 count_more_K = 0
-for row in range(1, n):
-    if row <= n // 2:
-        begin_col = n - 1 - row
-    else:
-        begin_col = row
-    for col in range(begin_col, n):
-        if (col + 1) % 2 == 0:  # Нумерация столбцов начинается с 1
-            if E[row][col] > K:
+for row in range(1, n//2+1):
+    for col in range(row, n-row):
+        if col % 2 == 1:  # Нумерация столбцов начинается с 1
+            if E[col][row*-1] > K:
                 count_more_K += 1  # Увеличиваем счетчик
 print(f'Количество чисел, больших К в четных столбцах в области 2 в матрице E: {count_more_K}')
 
 F = [] # Создаём матрицу F следующим образом
 if count_more_K > x: # Если в Е количество чисел, больших К в четных столбцах в области 2 больше, чем произведение чисел в нечетных строках в области 4,...
     C_F = C
-    for row in range(1, n): #...то поменять в С симметрично области 1 и 4 местами,...
-        if row <= n // 2:
-            end_col = row
-        else:
-            end_col = n - 1 - row
-        for col in range(0, end_col):
-            C_F[row][col], C_F[col][row] = C_F[col][row], C_F[row][col]
+    for row in range (1, n//2+1):
+        for col in range(row, n-row):
+            C_F[row-1][col], C_F[col][row-1] = C_F[col][row-1], C_F[row-1][col]
+    print('Матрица C_F')
     for row in range(n):
-        F.append(E[row] + B[row])
-    for row in range(n):
-        F.append(D[row] + C_F[row])
+        F.insert(row, E[row] + B[row])
+        F.insert(row+5, D[row] + C_F[row])
 else: # иначе С и В поменять местами несимметрично
     for row in range(n):
-        F.append(E[row] + C[row])
-    for row in range(n):
-        F.append(D[row] + B[row])
+        F.insert(row, E[row] + B[row])
+        F.insert(row+5, D[row] + C[row])
 print('Матрица F:')
 for row in range(len(F)):
     print(F[row])
