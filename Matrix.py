@@ -79,7 +79,7 @@ else:
 A = []
 for row in range(n):
     A.insert(row, E[row] + B[row])
-    A.insert(row+5, D[row] + C[row])
+    A.insert(row+n, D[row] + C[row])
 
 # Печатаем матрицы E, B, C, D, A
 print('Матрица E:')
@@ -110,7 +110,6 @@ for row in range (1, n//2+1):
             x *= E[col][row-1]
 print(f'Произведение чисел в нечетных строках в области 4 в матрице E: {x}')
 
-print("Область 2")
 # Считаем количество чисел, больших К в четных столбцах в области 2 в матрице E
 count_more_K = 0
 for row in range(1, n//2+1):
@@ -129,13 +128,13 @@ if count_more_K > x: # Если в Е количество чисел, боль�
     print('Матрица C_F')
     for row in range(n):
         F.insert(row, E[row] + B[row])
-        F.insert(row+5, D[row] + C_F[row])
+        F.insert(row+n, D[row] + C_F[row])
 else: # иначе С и В поменять местами несимметрично
     for row in range(n):
         F.insert(row, E[row] + B[row])
-        F.insert(row+5, D[row] + C[row])
+        F.insert(row+n, D[row] + C[row])
     print('Матрица F:')
-        for row in range(len(F)):
+    for row in range(len(F)):
         print(F[row])
 
 A_and_F = []  # Умножаем матрицы A и F
